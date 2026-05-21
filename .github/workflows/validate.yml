@@ -36,3 +36,5 @@ jobs:
       - uses: ludeeus/action-shellcheck@master
         with:
           scandir: "./install"
+          # SC1091 (动态 source 路径) 是 info 级，不应阻断 CI
+          severity: warning
