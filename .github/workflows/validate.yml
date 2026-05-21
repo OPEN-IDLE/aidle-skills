@@ -1,0 +1,38 @@
+name: Validate
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  validate-skills:
+    name: Validate SKILL.md format
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Validate skills
+        run: python3 scripts/validate-skills.py
+
+      - name: Check README is up to date
+        run: |
+          python3 scripts/generate-readme.py
+          if ! git diff --exit-code README.md; then
+            echo "::error::README.md 已过期，请运行 python3 scripts/generate-readme.py 后提交。"
+            exit 1
+          fi
+
+  shellcheck:
+    name: Shellcheck install scripts
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ludeeus/action-shellcheck@master
+        with:
+          scandir: "./install"

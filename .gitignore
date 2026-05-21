@@ -16,6 +16,9 @@ eggs/
 .eggs/
 lib/
 lib64/
+# 但 install/lib/ 是本仓库的脚本目录，不应被忽略
+!install/lib/
+!install/lib/**
 parts/
 sdist/
 var/
@@ -216,3 +219,53 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# ────────────────────────────────────────────────────────────────────
+# 🔐 Secrets & credentials (永不入库)
+# ────────────────────────────────────────────────────────────────────
+# 通用环境变量与配置文件（保留 *.example 模板）
+.env
+.env.*
+*.env
+!*.env.example
+
+# 认证、凭证、token 文件
+auth.json
+credentials.json
+secrets.json
+secrets/
+*.secret
+*.secrets
+
+# 证书与私钥
+*.pem
+*.key
+*.p12
+*.pfx
+*.crt
+*.cer
+*.jks
+*.keystore
+
+# SSH 密钥
+id_rsa
+id_rsa.pub
+id_ed25519
+id_ed25519.pub
+known_hosts
+
+# 云厂商凭证目录
+.aws/
+.gcp/
+.azure/
+
+# aidle 本机配置目录（绝不应该被追踪）
+.aidle/
+
+# AI 工具本地配置（settings.local.json 等）
+.claude/
+.codex/
+
+# 编辑器临时文件
+.DS_Store
+Thumbs.db

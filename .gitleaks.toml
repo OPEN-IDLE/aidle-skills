@@ -1,0 +1,36 @@
+title = "aidle-skills gitleaks config"
+
+# 仓库使用 gitleaks 默认规则集 + 以下 allowlist
+# 文档：https://github.com/gitleaks/gitleaks#configuration
+
+[allowlist]
+description = "占位符与示例字符串白名单（明显非真实密钥）"
+
+# 匹配这些则不报警
+regexes = [
+    '''sk-x{4,}''',                              # sk-xxxx... 占位符
+    '''sk-\.\.\.''',                              # sk-...
+    '''<your[_-]?(api[_-]?)?(key|token)>''',      # <your-api-key> / <your-token>
+    '''<SKILL_ROOT>''',
+    '''YOUR_API_KEY''',
+    '''(?i)example[_-]?(api[_-]?)?key''',
+]
+
+# 这些路径整体忽略
+paths = [
+    '''docs/security\.md''',
+    '''.*\.example$''',
+    '''examples/.*''',
+    '''CHANGELOG\.md''',
+    '''skills/_template/.*''',
+]
+
+# 包含这些子串的"疑似密钥"被视为示例
+stopwords = [
+    "xxxxxxxx",
+    "placeholder",
+    "example",
+    "sample",
+    "your_token_here",
+    "your-token-here",
+]
